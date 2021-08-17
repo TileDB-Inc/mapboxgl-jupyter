@@ -122,7 +122,8 @@ class MapViz(object):
                  scale_background_color='white',
                  scale_text_color='#131516',
                  popup_open_action='hover',
-                 add_snapshot_links=False):
+                 add_snapshot_links=False,
+                 headers={}):
         """Construct a MapViz object
 
         :param data: GeoJSON Feature Collection
@@ -171,6 +172,7 @@ class MapViz(object):
         :param scale_text_color: text color the scale annotation
         :param popup_open_action: controls behavior of opening and closing feature popups; one of 'hover' or 'click'
         :param add_snapshot_links: boolean switch for adding buttons to download screen captures of map or legend
+        :param headers: dictionary of custom http headers to send with raster or vector tile requests
 
         """
         if access_token is None:
@@ -241,6 +243,8 @@ class MapViz(object):
         self.scale_background_color = scale_background_color
         self.scale_text_color = scale_text_color
 
+        self.headers = headers
+
     def as_iframe(self, html_data):
         """Build the HTML representation for the mapviz."""
 
@@ -298,6 +302,7 @@ class MapViz(object):
             scalePosition=self.scale_position,
             scaleFillColor=self.scale_background_color,
             scaleTextColor=self.scale_text_color,
+            headers=self.headers,
         )
 
         if self.legend:

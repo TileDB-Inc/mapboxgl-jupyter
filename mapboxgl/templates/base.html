@@ -9,7 +9,8 @@
           url.slice(10, 26) === 'tiles.mapbox.com';
       
         return {
-          url: isMapboxRequest ? url.replace('?', '?pluginName=PythonMapboxgl&') : url
+          url: isMapboxRequest ? url.replace('?', '?pluginName=PythonMapboxgl&') : url,
+          headers: isMapboxRequest ? {} : {{ headers }},
         }
     };
 
