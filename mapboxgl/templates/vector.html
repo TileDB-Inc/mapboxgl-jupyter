@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block legend %}{% endblock legend %}
+
+{% block map %}
+
+    map.on('style.load', function() {
+        let params = {
+            "type": "vector",
+            "tiles": [
+                 "{{ tiles_url }}"
+            ],
+            "minzoom": {{ tiles_minzoom }},
+            "maxzoom": {{ tiles_maxzoom }}
+        }
+        if ({{ tiles_bounds }} !== undefined) params.bounds = {{ tiles_bounds }};
+
+        map.addSource("vector-tiles", params);
+
+        map.addLayer({
+            "id": "vector-tiles",
+            "type": "fill",
+            "source": "vector-tiles",
+            "source-layer": "sample",
+            'paint': {
+                'fill-outline-color': 'black',
+                'fill-color':  {
+                    property: 'Value', 
+
+                    stops: [
+                        [0.02, '#66a266'],
+                        [0.025, '#5b915b'],
+                        [0.03, '#518151'],
+                        [0.035, '#477147'],
+                        [0.04, '#3d613d'],
+                        [0.06, '#335133'],
+                        [0.08, '#284028'],
+                        [0.1, '#1e301e'],
+                        [0.12, '#142014'],
+                        [0.15, '#0a100a']
+                    ]
+                },
+                'fill-opacity': 0.2,
+            },
+        }, "{{belowLayer}}" );
+
+    });
+
+{% endblock map %}
